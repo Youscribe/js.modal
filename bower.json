@@ -1,0 +1,24 @@
+{
+  "name": "Youscribe.Modal",
+  "main": "modal.js",
+  "version": "0.0.0",
+  "authors": [
+    "Frédéric GRATI <grati.frederic@gmail.com>"
+  ],
+  "description": "JQuery plugin for Modal window",
+  "keywords": [
+    "jquery",
+    "modal"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "1.11.X"
+  }
+}
