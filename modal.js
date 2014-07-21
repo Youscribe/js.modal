@@ -1,4 +1,4 @@
-(function (root, factory) {
+﻿(function (root, factory) {
 
     // Set up Modal appropriately for the environment. Start with AMD.
     if (typeof define === 'function' && define.amd) {
@@ -352,10 +352,6 @@
                     display: 'none'
                 }).remove();
                 this.visible = false;
-
-                if (after) {
-                    after();
-                }
 
                 if (this.options.unload) {
                     this.unload();
