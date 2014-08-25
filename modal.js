@@ -356,6 +356,11 @@
                 if (this.options.unload) {
                     this.unload();
                 }
+
+                if (this.options.onHide) {
+                    this.options.onHide();
+                }
+
             };
 
             this.content.animate({
