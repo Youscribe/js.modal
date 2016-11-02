@@ -1,4 +1,4 @@
-﻿(function (root, factory) {
+(function (root, factory) {
 
     // Set up Modal appropriately for the environment. Start with AMD.
     if (typeof define === 'function' && define.amd) {
@@ -38,6 +38,7 @@
                 if (options.onLoaded) {
                     options.onLoaded(modal.html);
                 }
+                modal.updatePosition();
             }
         } else {
 
@@ -56,6 +57,7 @@
                     if (options.onLoaded) {
                         options.onLoaded(modal.html);
                     }
+                    modal.updatePosition();
                 }
             };
 
@@ -84,6 +86,7 @@
         if (options.onLoaded) {
             options.onLoaded($.currentModal.html);
         }
+        $.currentModal.updatePosition();
     };
 
     Modal.close = function () {
@@ -238,8 +241,6 @@
                     s.parentNode.insertBefore(el, s);
                 }
             }
-
-            this.updatePosition();
         },
 
         /**
