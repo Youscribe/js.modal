@@ -38,7 +38,6 @@
                 if (options.onLoaded) {
                     options.onLoaded(modal.html);
                 }
-                modal.updatePosition();
             }
         } else {
 
@@ -57,7 +56,6 @@
                     if (options.onLoaded) {
                         options.onLoaded(modal.html);
                     }
-                    modal.updatePosition();
                 }
             };
 
@@ -86,7 +84,6 @@
         if (options.onLoaded) {
             options.onLoaded($.currentModal.html);
         }
-        $.currentModal.updatePosition();
     };
 
     Modal.close = function () {
@@ -241,6 +238,8 @@
                     s.parentNode.insertBefore(el, s);
                 }
             }
+
+            this.updatePosition();
         },
 
         /**
@@ -257,17 +256,17 @@
 
             if (contentHeight > windowHeight) {
                 var contentheight = windowHeight - (this.options.windowMargin * 2);
-                //this.content.height(contentheight);
-                //this.content.css({
-                //    'overflow-y': 'scroll'
-                //});
+                this.content.height(contentheight);
+                this.content.css({
+                    'overflow-y': 'scroll'
+                });
 
                 height = this.options.windowMargin;
             } else {
-                //this.content.css({
-                //    'overflow-y': '',
-                //    height: ''
-                //});
+                this.content.css({
+                    'overflow-y': '',
+                    height: ''
+                });
             }
 
             var windowWidth = $window.width();
@@ -277,7 +276,6 @@
 
             return {
                 top: height + $window.scrollTop() + "px",
-                bottom: height + $window.scrollTop() + "px",
                 left: width + $window.scrollLeft() + "px"
             };
         },
@@ -327,7 +325,6 @@
                 .css({
                     top: this.options.viewport.top,
                     left: this.options.viewport.left,
-                    bottom: this.options.viewport.top,
                     'z-index': this.options.zIndex + $('.modal').length
                 })
                 .show()
@@ -389,8 +386,7 @@
                 this.options.viewport = this.viewport($('.modal-box', this.content));
                 this.content.css({
                     top: this.options.viewport.top,
-                    left: this.options.viewport.left,
-                    bottom: this.options.viewport.top
+                    left: this.options.viewport.left
                 });
             }
             return this;
