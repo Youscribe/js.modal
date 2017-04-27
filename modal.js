@@ -14,7 +14,6 @@
 
     /** destroy Method **/
     Modal.destroy = function () {
-        $('.modal-modal, .modal').remove();
         $.currentModal = undefined;
     };
 
@@ -106,19 +105,6 @@
             e.preventDefault();
         });
 
-        // Create .modal-modal and add it into Dom
-        _this.$modal = null;
-        if (_this.options.modal) {
-            _this.$modal = $('<div class="modal-modal"></div>')
-                .css({
-                    opacity: _this.options.modalOpacity,
-                    width: $document.width(),
-                    height: $document.height(),
-                    'z-index': _this.options.zIndex + $('.modal').length
-                })
-                .appendTo(document.body);
-        }
-
         // Set AutoHide after Click
         if (_this.$modal && _this.options.modalAutoHide) {
             _this.$modal.on('click', $.proxy(_this.hide, _this));
@@ -128,9 +114,6 @@
         if (_this.options.autoclose !== null) {
             root.setTimeout($.proxy(_this.hide, _this), _this.options.autoclose);
         }
-
-        // Bind Resize Event
-        $window.on('resize', $.proxy(_this.resize, _this));
 
         // Bind keyDown.modal
         $document.on('keydown.modal', $.proxy(_this.keyHandler, _this));
@@ -154,10 +137,6 @@
             padding: '10px', // content padding
             show: true, // show message after load
             unload: true, // unload message after hide
-            viewport: {
-                top: '0px',
-                left: '0px'
-            }, // if not center message, sets X and Y position
             width: '500px', // message width
             zIndex: 10000, // message z-index
             windowMargin: 50, // when the content is more than the window size set the margin height
@@ -243,44 +222,6 @@
         },
 
         /**
-         * [viewport description]
-         * @return {{top: string, left: string}} [description]
-         */
-        viewport: function () {
-            var $window = $(window);
-
-            var windowHeight = $window.height();
-            var contentHeight = this.content.find('.modal-box:first').height();
-
-            var height = (windowHeight - contentHeight) / 2;
-
-            if (contentHeight > windowHeight) {
-                var contentheight = windowHeight - (this.options.windowMargin * 2);
-                this.content.height(contentheight);
-                this.content.css({
-                    'overflow-y': 'scroll'
-                });
-
-                height = this.options.windowMargin;
-            } else {
-                this.content.css({
-                    'overflow-y': '',
-                    height: ''
-                });
-            }
-
-            var windowWidth = $window.width();
-            var contentWidth = this.content.find('.modal-box:first').width();
-
-            var width = (windowWidth - contentWidth) / 2;
-
-            return {
-                top: height + $window.scrollTop() + "px",
-                left: width + $window.scrollLeft() + "px"
-            };
-        },
-
-        /**
          * [showLoading description]
          * @return {[type]} [description]
          */
@@ -314,17 +255,12 @@
          * @return {[type]} [description]
          */
         updatePosition: function () {
-            // obtenemos el centro de la pantalla si la opción de centrar está activada
-            if (this.options.center) this.options.viewport = this.viewport(jQuery('.modal-box', this.content));
-
             if ($('.modal-content').innerWidth() === 0) {
                 root.setTimeout($.proxy(this.updatePosition, this), 100);
             }
 
             this.content
                 .css({
-                    top: this.options.viewport.top,
-                    left: this.options.viewport.left,
                     'z-index': this.options.zIndex + $('.modal').length
                 })
                 .show()
@@ -371,28 +307,6 @@
         },
 
         /**
-         * [resize description]
-         * @return {[type]} [description]
-         */
-        resize: function () {
-            if (this.options.modal) {
-                $('.modal-modal').css({
-                    width: $(document).width(),
-                    height: $(document).height()
-                });
-            }
-
-            if (this.options.center) {
-                this.options.viewport = this.viewport($('.modal-box', this.content));
-                this.content.css({
-                    top: this.options.viewport.top,
-                    left: this.options.viewport.left
-                });
-            }
-            return this;
-        },
-
-        /**
          * [toggle description]
          * @return {[type]} [description]
          */
@@ -409,7 +323,6 @@
             if (this.visible)
                 this.hide();
             var _this = this;
-            $(window).unbind('resize', $.proxy(this.resize, this));
             this.content.remove();
             $.currentModal = undefined;
         },
