@@ -14,6 +14,7 @@
 
     /** destroy Method **/
     Modal.destroy = function () {
+        $('.modal-modal, .modal').remove();
         $.currentModal = undefined;
     };
 
