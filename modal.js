@@ -21,6 +21,7 @@
     /** load Method (Url) **/
     Modal.loadFromUrl = function (url, options) {
         this.destroy();
+        $(window).trigger('modal.all.close');
 
         options = $.extend(options || {}, {
             show: true,
@@ -72,6 +73,7 @@
     /** load Method (Content) **/
     Modal.loadFromContent = function (content, options) {
         this.destroy();
+        $(window).trigger('modal.all.close');
 
         options = jQuery.extend(options || {}, {
             show: true,
@@ -100,11 +102,23 @@
         // init modal viewport
         _this.content = $(_this.template);
 
-        // adjust title
+        // native and custom close button
         _this.content.on('click', '.modal-closebtn, .popup-close', function (e) {
             _this.hide();
             e.preventDefault();
         });
+
+        // close when click outside modal
+        _this.content.on('click', function (e) {
+            if (e.target !== this) { return }
+            _this.hide();
+            e.stopPropagation();
+        });
+
+        // handler to close all Modal instances
+        $(window).on('modal.all.close', function () {
+            _this.hide();
+        })
 
         // Set AutoHide after Click
         if (_this.$modal && _this.options.modalAutoHide) {
