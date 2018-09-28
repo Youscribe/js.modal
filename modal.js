@@ -14,7 +14,7 @@
 
     /** destroy Method **/
     Modal.destroy = function () {
-        $('.modal-modal, .modal').remove();
+        $('.ys-modal-modal, .ys-modal').remove();
         $.currentModal = undefined;
     };
 
@@ -103,7 +103,7 @@
         _this.content = $(_this.template);
 
         // native and custom close button
-        _this.content.on('click', '.modal-closebtn, .popup-close', function (e) {
+        _this.content.on('click', '.ys-modal-closebtn, .popup-close', function (e) {
             _this.hide();
             e.preventDefault();
         });
@@ -147,9 +147,9 @@
             title: null, // message title
             titleClass: null, // title style: info, warning, success, error
             modal: false, // shows message in modal (loads background)
-            modalOpacity: 0.2, // modal background opacity
+            modalOpacity: 0.3, // modal background opacity
             modalAutoHide: true, // auto hide the modal when click
-            padding: '10px', // content padding
+            padding: '0', // content padding
             show: true, // show message after load
             unload: true, // unload message after hide
             width: '500px', // message width
@@ -158,8 +158,8 @@
             loadJS: true,
             exitOnEscapte: true
         },
-        template: '<div class="modal"><div class="modal-box"><div class="modal-wrapper"><div class="modal-content"></div></div></div></div>',
-        loadingTemplate: '<div class="modal-loading"></div>',
+        template: '<div class="ys-modal"><div class="ys-modal-box"><div class="ys-modal-wrapper"><div class="ys-modal-content"></div></div></div></div>',
+        loadingTemplate: '<div class="ys-modal-loading"></div>',
         content: '',
         visible: false,
         html: '',
@@ -200,14 +200,14 @@
         setContent: function (data) {
             var filterRes = this.filterScripts(data);
             this.html = filterRes[0];
-            var $modalContent = $('.modal-content', this.content);
+            var $modalContent = $('.ys-modal-content', this.content);
             $modalContent.css({
                 padding: this.options.padding,
                 height: this.options.height
             }).empty();
 
             if (this.options.closeButton) {
-                $modalContent.append('<span class="modal-closebtn"></span>');
+                $modalContent.append('<span class="ys-modal-closebtn"></span>');
             }
 
             $modalContent.append(this.html);
@@ -241,7 +241,7 @@
          * @return {[type]} [description]
          */
         showLoading: function () {
-            $('.modal-content', this.content)
+            $('.ys-modal-content', this.content)
                 .css({
                     padding: this.options.padding,
                     height: this.options.height
@@ -270,13 +270,13 @@
          * @return {[type]} [description]
          */
         updatePosition: function () {
-            if ($('.modal-content').innerWidth() === 0) {
+            if ($('.ys-modal-content').innerWidth() === 0) {
                 root.setTimeout($.proxy(this.updatePosition, this), 100);
             }
 
             this.content
                 .css({
-                    'z-index': this.options.zIndex + $('.modal').length
+                    'z-index': this.options.zIndex + $('.ys-modal').length
                 })
                 .show()
                 .animate({
